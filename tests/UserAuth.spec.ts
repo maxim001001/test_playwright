@@ -9,10 +9,10 @@ const baseUrl = "https://lgqlmp-3000.csb.app/";
 
 test.beforeEach(async ({ page }) => {
   await page.goto(baseUrl);
+  await page.getByText("Авторизоваться").click();
 });
 
 test("test write wrong data", async ({ page }) => {
-  await page.getByText("Авторизоваться").click();
   await expect(page.getByTestId("auth-form")).toBeVisible();
   await page.getByPlaceholder("Почта").fill("test");
   await page.getByPlaceholder("Пароль").fill("test");
@@ -21,7 +21,6 @@ test("test write wrong data", async ({ page }) => {
 });
 
 test("test write right data", async ({ page }) => {
-  await page.getByText("Авторизоваться").click();
   await expect(page.getByTestId("auth-form")).toBeVisible();
   await page.getByPlaceholder("Почта").fill("admin@gmail.com");
   await page.getByPlaceholder("Пароль").fill("12345");

@@ -3,7 +3,13 @@ import { createPortal } from "react-dom";
 
 const modalRootElement = document.querySelector("#modal")!;
 
-export const Modal = ({ children }: { children: ReactNode }) => {
+export const CreateModal = ({
+  children,
+  id,
+}: {
+  children: ReactNode;
+  id: string;
+}) => {
   const element = useMemo(() => document.createElement("div"), []);
   useEffect(() => {
     modalRootElement.appendChild(element);
@@ -11,5 +17,5 @@ export const Modal = ({ children }: { children: ReactNode }) => {
       modalRootElement.removeChild(element);
     };
   });
-  return createPortal(children, element);
+  return createPortal(<div id={id}>{children}</div>, element);
 };
