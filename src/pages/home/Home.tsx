@@ -18,6 +18,7 @@ export default function Home() {
         text="Авторизоваться"
         name="primary"
         onClick={() => setIsOpen()}
+        type={"button"}
       />
       <h2>для авторизации</h2>
       <p>admin@gmail.com</p>

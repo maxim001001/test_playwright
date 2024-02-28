@@ -57,7 +57,7 @@ export const AuthForm = () => {
     }
   };
   return (
-    <div className={styles.form}>
+    <div className={styles.form} data-testid="auth-form">
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => handleSubmit(values)}
@@ -86,7 +86,7 @@ export const AuthForm = () => {
                 </Field>
               </label>
             ))}
-            <Button text="Отправить" name="primary" type="button" />
+            <Button text="Отправить" name="primary" type="submit" />
           </Form>
         )}
       </Formik>

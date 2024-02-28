@@ -4,6 +4,7 @@ exports[`Button test cases matches snapshot 1`] = `
 <DocumentFragment>
   <button
     class="button default "
+    type="submit"
   >
     Click me
   </button>
