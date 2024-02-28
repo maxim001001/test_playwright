@@ -1,0 +1,72 @@
+$primary-color: #3498db;
+
+.button {
+  display: inline-block;
+  font-size: 16px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.1s ease,
+    color 0.3s ease;
+  min-width: 120px;
+  user-select: none;
+}
+.button:disabled {
+  opacity: 0.5;
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.primary {
+  background-color: $primary-color;
+  color: #fff;
+  border: 1px solid $primary-color;
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.default {
+  background-color: #ecf0f1;
+  color: #333;
+  border: 1px solid #d9d9d9;
+  &:hover {
+    border-color: $primary-color;
+    color: $primary-color;
+  }
+}
+
+.dashed {
+  background-color: transparent;
+  color: #333;
+  border: 1px dashed #a5a5a5;
+  &:hover {
+    border-color: #333;
+    border-color: $primary-color;
+    color: $primary-color;
+  }
+}
+
+.text {
+  background-color: transparent;
+  color: $primary-color;
+  border: none;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+}
+
+.link {
+  background-color: transparent;
+  color: $primary-color;
+  border: none;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+    color: darken($primary-color, 10%);
+  }
+}
