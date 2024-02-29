@@ -44,7 +44,7 @@
     "eject": "react-scripts eject",
     "test:unit:react-scripts": "react-scripts test --env=jsdom",
     "test:unit:jest !!!noWORK!!!": "jest --verbose ./src",
-    "setup-playwright": "playwright install && playwright install-deps",
+    "setup-playwright": "playwright install --with-deps",
     "test:ui": "npx playwright test",
     "test:ui-report": "npx playwright test && npx playwright show-report"
   },

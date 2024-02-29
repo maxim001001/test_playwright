@@ -15,7 +15,11 @@ test("test write wrong data", async ({ page }: Page) => {
   await expect(page.getByTestId("auth-form")).toBeVisible();
   await page.getByPlaceholder("Почта").fill("test");
   await page.getByPlaceholder("Пароль").fill("test");
-  await page.getByText("Отправить").click();
+  const buttonLocator = await page.getByText("Отправить");
+  const isButtonDisabled = await buttonLocator.evaluate(
+    (button: HTMLButtonElement) => button.disabled,
+  );
+  expect(isButtonDisabled).toBe(true);
   await expect(page).toHaveURL(TEST_URL);
 });
 
@@ -25,7 +29,7 @@ test("test write right data", async ({ page }: Page) => {
   await page.getByPlaceholder("Пароль").fill("12345");
   await page.getByText("Отправить").click();
   await expect(page.getByText("У вас есть доступ на сайт")).toBeVisible();
-  await expect(page).toHaveURL(`${TEST_URL}` + "/dashboard");
+  await expect(page).toHaveURL(`${TEST_URL}` + "dashboard");
   await page.getByText("Выйти").click();
   await expect(page).toHaveURL(TEST_URL);
   await expect(page.getByText("Авторизоваться")).toBeVisible();
