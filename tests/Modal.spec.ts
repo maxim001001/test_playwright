@@ -1,36 +1,30 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, Page } from "@playwright/test";
+import { TEST_URL } from "./setTestUrl";
 
-const baseUrl = "https://lgqlmp-3000.csb.app/";
+test.describe("modal", async () => {
+  test.beforeEach(async ({ page }: Page) => {
+    await page.goto(TEST_URL);
+    await page.getByText("Авторизоваться").click();
+    const modalBackgroundElement1 = await page.$("#modal-background");
+    expect(modalBackgroundElement1).toBeTruthy();
+  });
 
-test.beforeEach(async ({ page }) => {
-  await page.goto(baseUrl);
-});
+  test("opens and closes by external click", async ({ page }: Page) => {
+    await page.mouse.click(10, 10);
+  });
 
-test("modal opens and closes", async ({ page }) => {
-  await page.getByText("Авторизоваться").click();
-  // #modal-background
-  const modal = await page.waitForSelector("#modal", { state: "visible" });
-  expect(modal).toBeTruthy();
+  test("closes by clicking on #modal-closeBtn", async ({ page }: Page) => {
+    await page.click("#modal-closeBtn");
+  });
 
-  // Проверяем, что модальное окно открыто
-  const modal = await page.waitForSelector("#modal", { state: "visible" });
-  expect(modal).toBeTruthy();
+  test("closes by pressing Escape key", async ({ page }: Page) => {
+    await page.keyboard.press("Escape");
+  });
 
-  // Кликаем по крестику, чтобы закрыть модальное окно
-  await page.click("#closeModalButton");
-
-  // Проверяем, что модальное окно закрыто
-  await page.waitForSelector("#modal", { state: "hidden" });
-
-  // Кликаем по кнопке, чтобы открыть модальное окно
-  await page.click("#openModalButton");
-
-  // Проверяем, что модальное окно открыто
-  await page.waitForSelector("#modal", { state: "visible" });
-
-  // Кликаем по внешнему фону, чтобы закрыть модальное окно
-  await page.click("#modalBackground");
-
-  // Проверяем, что модальное окно закрыто
-  await page.waitForSelector("#modal", { state: "hidden" });
+  test.afterEach(async ({ page }: Page) => {
+    await page.waitForTimeout(500); // Дождаться анимации модального окна
+    await page.waitForSelector("#modal", { state: "hidden" }); // Дождаться, пока модальное окно исчезнет или станет невидимым
+    const modalBackgroundElement2 = await page.$("#modal-background");
+    expect(modalBackgroundElement2).toBeNull();
+  });
 });

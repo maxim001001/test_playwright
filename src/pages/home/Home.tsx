@@ -19,6 +19,7 @@ export default function Home() {
         name="primary"
         onClick={() => setIsOpen()}
         type={"button"}
+        id="authBtn"
       />
       <h2>для авторизации</h2>
       <p>admin@gmail.com</p>

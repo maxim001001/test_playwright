@@ -83,7 +83,7 @@ export const RenderModal: FC<IModalListProps> = (props) => {
   };
 
   return (
-    <CreateModal id="modal-form">
+    <CreateModal id="modal">
       <div
         className={`${style.formContainer} ${background}`}
         id="modal-background"
@@ -95,6 +95,7 @@ export const RenderModal: FC<IModalListProps> = (props) => {
             className={style.closeBtn}
             src={closeBtn}
             alt="close button"
+            id="modal-closeBtn"
           />
         </div>
       </div>

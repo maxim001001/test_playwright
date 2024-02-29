@@ -8,6 +8,7 @@ export interface IButton {
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
+  id?: string;
 }
 
 export const Button: React.FC<IButton> = ({
@@ -17,6 +18,7 @@ export const Button: React.FC<IButton> = ({
   type,
   className,
   disabled,
+  id,
 }) => {
   const buttonClass = `${styles.button} ${styles[name]} ${className || ""}`;
 
@@ -26,6 +28,7 @@ export const Button: React.FC<IButton> = ({
       onClick={onClick}
       disabled={disabled}
       type={type}
+      id={id}
     >
       {text}
     </button>
