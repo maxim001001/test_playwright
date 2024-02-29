@@ -22,7 +22,7 @@ export default function DashBoard() {
   return (
     <>
       <div>
-        <h1>Вы авторизованы</h1>
+        <h1>У вас есть доступ на сайт</h1>
         <Button name="default" text="Выйти" onClick={() => handleLogOut()} />
       </div>
       <div>

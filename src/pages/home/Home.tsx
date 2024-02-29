@@ -1,7 +1,7 @@
 //@ts-ignore
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "../../components/Button/Button";
-import { Form } from "../../Form";
+import { RenderModal } from "../../Modal";
 import { toggleModal, isOpenModalState } from "../../redux/slices/ModalState";
 import "../../__reset.scss";
 
@@ -13,11 +13,12 @@ export default function Home() {
   };
   return (
     <>
-      {isOpen ? <Form type="AuthForm" /> : null}
+      {isOpen ? <RenderModal type="AuthForm" /> : null}
       <Button
         text="Авторизоваться"
         name="primary"
         onClick={() => setIsOpen()}
+        type={"button"}
       />
       <h2>для авторизации</h2>
       <p>admin@gmail.com</p>

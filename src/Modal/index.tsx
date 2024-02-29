@@ -2,19 +2,19 @@
 import { useDispatch } from "react-redux";
 import { FC, useEffect, useRef, useState } from "react";
 import debounce from "lodash.debounce";
-import { Modal } from "../Modal/Modal";
-import { AuthForm } from "./AuthForm/AuthForm";
+import { CreateModal } from "./CreateModal";
+import { AuthForm } from "../Form/AuthForm/AuthForm";
 import { toggleModal } from "../redux/slices/ModalState";
 import { AppDispatch } from "../redux/store";
 
-import style from "./Form.module.scss";
+import style from "./Modal.module.scss";
 import closeBtn from "../assets/svg/closeBtn.svg";
 
 export interface IModalListProps {
   type?: "AuthForm";
 }
 
-export const Form: FC<IModalListProps> = (props) => {
+export const RenderModal: FC<IModalListProps> = (props) => {
   const dispatch = useDispatch<AppDispatch>();
   const formRef = useRef(null);
 
@@ -83,8 +83,11 @@ export const Form: FC<IModalListProps> = (props) => {
   };
 
   return (
-    <Modal>
-      <div className={`${style.formContainer} ${background}`}>
+    <CreateModal id="modal-form">
+      <div
+        className={`${style.formContainer} ${background}`}
+        id="modal-background"
+      >
         <div ref={formRef} className={`${style.FormBox} ${isHidden}`}>
           <div className={style.authForm}>{wrapperModal()}</div>
           <img
@@ -95,6 +98,6 @@ export const Form: FC<IModalListProps> = (props) => {
           />
         </div>
       </div>
-    </Modal>
+    </CreateModal>
   );
 };

@@ -39,7 +39,7 @@ const formFields: FormField[] = [
     name: "password",
     type: "password",
     placeholder: "Пароль",
-    label: "Пароль",
+    label: "Введите пароль",
     validate: validatePassword,
   },
 ];
@@ -56,13 +56,14 @@ export const AuthForm = () => {
       navigate("/dashboard");
     }
   };
+
   return (
-    <div className={styles.form}>
+    <div className={styles.form} data-testid="auth-form">
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => handleSubmit(values)}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting, isValid }) => (
           <Form>
             {formFields.map(({ name, type, placeholder, label, validate }) => (
               <label
@@ -86,7 +87,12 @@ export const AuthForm = () => {
                 </Field>
               </label>
             ))}
-            <Button text="Отправить" name="primary" type="button" />
+            <Button
+              text="Отправить"
+              name="primary"
+              type="submit"
+              disabled={isSubmitting || !isValid}
+            />
           </Form>
         )}
       </Formik>

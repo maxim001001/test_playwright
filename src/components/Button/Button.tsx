@@ -25,7 +25,7 @@ export const Button: React.FC<IButton> = ({
       className={buttonClass}
       onClick={onClick}
       disabled={disabled}
-      type={"submit"}
+      type={type}
     >
       {text}
     </button>
