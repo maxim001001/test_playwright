@@ -7,6 +7,7 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   validate?: (value: string) => string | undefined;
   formik?: boolean; // Флаг, указывающий, используется ли компонент с Formik
+  dataTestId?: string;
 }
 
 export const Input: FC<IInputProps> = ({
@@ -14,6 +15,7 @@ export const Input: FC<IInputProps> = ({
   name,
   validate,
   formik,
+  dataTestId,
   ...props
 }) => {
   if (formik) {
@@ -24,7 +26,12 @@ export const Input: FC<IInputProps> = ({
             {meta.touched && meta.error && (
               <div className="error">{meta.error}</div>
             )}
-            <input className={className} {...field} {...props} />
+            <input
+              className={className}
+              {...field}
+              {...props}
+              data-testid={dataTestId}
+            />
           </>
         )}
       </Field>

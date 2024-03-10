@@ -22,6 +22,7 @@ interface FormField {
   placeholder: string;
   label: string;
   validate: (value: any) => string | undefined;
+  dataTestId?: string;
 }
 
 const formFields: FormField[] = [
@@ -31,6 +32,7 @@ const formFields: FormField[] = [
     placeholder: "Почта",
     label: "Электронная почта",
     validate: validateEmail,
+    dataTestId: "inputMail-authModal",
   },
   {
     name: "password",
@@ -38,6 +40,7 @@ const formFields: FormField[] = [
     placeholder: "Пароль",
     label: "Введите пароль",
     validate: validatePassword,
+    dataTestId: "inputPassword-authModal",
   },
 ];
 
@@ -62,24 +65,28 @@ export const AuthForm = () => {
       >
         {({ isSubmitting, isValid }) => (
           <Form>
-            {formFields.map(({ name, type, placeholder, label, validate }) => (
-              <label key={name} className={styles.inputTitle}>
-                {label}
-                <Input
-                  className={styles.Field}
-                  name={name}
-                  type={type}
-                  placeholder={placeholder}
-                  validate={validate}
-                  formik
-                />
-              </label>
-            ))}
+            {formFields.map(
+              ({ name, type, placeholder, label, validate, dataTestId }) => (
+                <label key={name} className={styles.inputTitle}>
+                  {label}
+                  <Input
+                    className={styles.Field}
+                    name={name}
+                    type={type}
+                    placeholder={placeholder}
+                    validate={validate}
+                    dataTestId={dataTestId}
+                    formik
+                  />
+                </label>
+              ),
+            )}
             <Button
               text="Отправить"
               name="primary"
               type="submit"
               disabled={isSubmitting || !isValid}
+              dataTestId="buttonSubmit-authModal"
             />
           </Form>
         )}

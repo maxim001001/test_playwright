@@ -11,6 +11,7 @@ export interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   disabled?: boolean;
   id?: string;
+  dataTestId?: string;
 }
 
 export const Button: FC<IButton> = ({
@@ -21,6 +22,7 @@ export const Button: FC<IButton> = ({
   className,
   disabled,
   id,
+  dataTestId,
 }) => {
   return (
     <button
@@ -29,6 +31,7 @@ export const Button: FC<IButton> = ({
       disabled={disabled}
       type={type}
       id={id}
+      data-testid={dataTestId}
     >
       {text}
     </button>

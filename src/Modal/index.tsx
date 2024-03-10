@@ -42,8 +42,13 @@ const Modal: FC<IModalProps> = ({ isOpen, toggleOpen, title, children }) => {
             <h3>{title}</h3>
             {children}
           </div>
-          <button onClick={handleClickClose} id="modal-closeBtn">
-            <img className={style.closeBtn} src={closeBtn} alt="close button" />
+          <button onClick={handleClickClose}>
+            <img
+              className={style.closeBtn}
+              src={closeBtn}
+              alt="close button"
+              data-testid="buttonClose-authModal"
+            />
           </button>
         </div>
       </div>
