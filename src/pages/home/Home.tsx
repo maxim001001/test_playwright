@@ -1,29 +1,37 @@
 //@ts-ignore
+import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "../../components/Button/Button";
-import { RenderModal } from "../../Modal";
-import { toggleModal, isOpenModalState } from "../../redux/slices/ModalState";
+import Modal from "../../Modal";
+import { AuthForm } from "../../Form/AuthForm/AuthForm";
+import { toggleModalState, getModalState } from "../../redux/slices/ModalState";
 import "../../__reset.scss";
 
 export default function Home() {
-  const isOpen = useSelector(isOpenModalState);
   const dispatch = useDispatch();
-  const setIsOpen = () => {
-    dispatch(toggleModal());
-  };
+
+  const isOpen = useSelector(getModalState);
+  const toggleAuthModal = useCallback(() => {
+    dispatch(toggleModalState());
+  }, []);
+
   return (
     <>
-      {isOpen ? <RenderModal type="AuthForm" /> : null}
+      <Modal isOpen={isOpen} toggleOpen={toggleAuthModal} title="Авторизация">
+        <AuthForm />
+      </Modal>
       <Button
         text="Авторизоваться"
         name="primary"
-        onClick={() => setIsOpen()}
+        onClick={toggleAuthModal}
         type={"button"}
         id="authBtn"
       />
-      <h2>для авторизации</h2>
-      <p>admin@gmail.com</p>
-      <p>12345</p>
+      <div>
+        <h2>для авторизации</h2>
+        <p>admin@gmail.com</p>
+        <p>12345</p>
+      </div>
     </>
   );
 }

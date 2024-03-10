@@ -19,7 +19,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const isLoginUser = (state: RootState) => state.UserState.isLoggedIn;
+export const getLoginUser = (state: RootState) => state.UserState.isLoggedIn;
 
 export const { toggleUserLogin } = userSlice.actions;
 

@@ -1,104 +1,54 @@
-//@ts-ignore
-import { useDispatch } from "react-redux";
-import { FC, useEffect, useRef, useState } from "react";
-import debounce from "lodash.debounce";
+//ts-ignore
+import React, { useCallback, FC, useRef } from "react";
 import { CreateModal } from "./CreateModal";
-import { AuthForm } from "../Form/AuthForm/AuthForm";
-import { toggleModal } from "../redux/slices/ModalState";
-import { AppDispatch } from "../redux/store";
-
+import useKeyDown from "../hooks/useKeyDown";
+import useClickOutside from "../hooks/useClickOutside";
+import classnames from "classnames";
 import style from "./Modal.module.scss";
 import closeBtn from "../assets/svg/closeBtn.svg";
 
-export interface IModalListProps {
-  type?: "AuthForm";
+interface IModalProps {
+  isOpen: boolean;
+  toggleOpen: VoidFunction;
+  title: string;
+  children: React.ReactNode;
 }
 
-export const RenderModal: FC<IModalListProps> = (props) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const formRef = useRef(null);
+const Modal: FC<IModalProps> = ({ isOpen, toggleOpen, title, children }) => {
+  const formRef = useRef<HTMLDivElement>(null);
 
-  const ClickClose = () => {
-    dispatch(toggleModal());
-  };
-  const Debounce = debounce(() => {
-    ClickClose();
-  }, 170);
+  const handleClickClose = useCallback(() => {
+    isOpen && toggleOpen();
+  }, [isOpen, toggleOpen]);
 
-  let modalTitle: string;
-  switch (props.type) {
-    case "AuthForm":
-      modalTitle = "Авторизация";
-      break;
-  }
+  useKeyDown(["Escape"], handleClickClose);
+  useClickOutside(formRef, handleClickClose);
 
-  useEffect(() => {
-    const handleEscapeKey = (event: any) => {
-      if (event.key === "Escape") {
-        setHidden(`${style.FormBoxClose}`);
-        setBackground(`${style.CloseBackground}`);
-        Debounce();
-      }
-    };
-    const handleClickOutside = (event: MouseEvent) => {
-      //@ts-ignore
-      if (formRef.current && !formRef.current.contains(event.target as Node)) {
-        setHidden("display-none");
-        if (event.target) {
-          setHidden(`${style.FormBoxClose}`);
-          setBackground(`${style.CloseBackground}`);
-          Debounce();
-        } else {
-          setBackground("");
-        }
-      }
-    };
-    window.addEventListener("keydown", handleEscapeKey);
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      window.removeEventListener("keydown", handleEscapeKey);
-    };
-  }, [Debounce]);
-
-  const [isHidden, setHidden] = useState("");
-  const [background, setBackground] = useState("");
-
-  const close = () => {
-    setTimeout(() => {
-      setHidden(`${style.FormBoxClose}`);
-      setBackground(`${style.CloseBackground}`);
-      Debounce();
-    }, 100);
-  };
-
-  const wrapperModal = () => {
-    return (
-      <div className={style.modalBox}>
-        <h3>{modalTitle}</h3>
-        {props.type === "AuthForm" && <AuthForm />}
-      </div>
-    );
-  };
-
-  return (
+  return isOpen ? (
     <CreateModal id="modal">
       <div
-        className={`${style.formContainer} ${background}`}
+        className={classnames(style.formContainer, {
+          [style.CloseBackground]: isOpen,
+        })}
         id="modal-background"
       >
-        <div ref={formRef} className={`${style.FormBox} ${isHidden}`}>
-          <div className={style.authForm}>{wrapperModal()}</div>
-          <img
-            onClick={() => close()}
-            className={style.closeBtn}
-            src={closeBtn}
-            alt="close button"
-            id="modal-closeBtn"
-          />
+        <div
+          ref={formRef}
+          className={classnames(style.FormBox, {
+            [style.FormBoxClose]: isOpen,
+          })}
+        >
+          <div className={style.authForm}>
+            <h3>{title}</h3>
+            {children}
+          </div>
+          <button onClick={handleClickClose} id="modal-closeBtn">
+            <img className={style.closeBtn} src={closeBtn} alt="close button" />
+          </button>
         </div>
       </div>
     </CreateModal>
-  );
+  ) : null;
 };
+
+export default Modal;

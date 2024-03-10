@@ -1,17 +1,19 @@
 // @ts-ignore
+import { FC } from "react";
+import classnames from "classnames";
 import styles from "./Button.module.scss";
 
-export interface IButton {
+export interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   name: "primary" | "default" | "dashed" | "text" | "link";
   type?: "submit" | "button";
-  onClick?: () => void;
+  onClick?: VoidFunction;
   className?: string;
   disabled?: boolean;
   id?: string;
 }
 
-export const Button: React.FC<IButton> = ({
+export const Button: FC<IButton> = ({
   onClick,
   text,
   name,
@@ -20,11 +22,9 @@ export const Button: React.FC<IButton> = ({
   disabled,
   id,
 }) => {
-  const buttonClass = `${styles.button} ${styles[name]} ${className || ""}`;
-
   return (
     <button
-      className={buttonClass}
+      className={classnames(styles.button, styles[name], className)}
       onClick={onClick}
       disabled={disabled}
       type={type}
