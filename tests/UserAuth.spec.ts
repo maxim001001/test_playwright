@@ -3,16 +3,16 @@
 //  - Покрыть тестом пользовательский флоу регистрации.
 // Ввод данных → сабмит → форма пропала и отображается надпись
 
-import { test, expect, Page } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { TEST_URL } from "./setTestUrl";
 
 test.describe("Test Registration Form", () => {
-  test.beforeEach(async ({ page }: Page) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto(TEST_URL);
     await page.getByTestId("buttonOpen-authModal").click();
   });
 
-  test("test write wrong data", async ({ page }: Page) => {
+  test("test write wrong data", async ({ page }) => {
     await expect(page.getByTestId("auth-form")).toBeVisible();
     await page.getByTestId("inputMail-authModal").fill("test");
     await page.getByTestId("inputPassword-authModal").fill("test");
@@ -24,7 +24,7 @@ test.describe("Test Registration Form", () => {
     await expect(page).toHaveURL(TEST_URL);
   });
 
-  test("test write right data", async ({ page }: Page) => {
+  test("test write right data", async ({ page }) => {
     await expect(page.getByTestId("auth-form")).toBeVisible();
     await page.getByTestId("inputMail-authModal").fill("admin@gmail.com");
     await page.getByTestId("inputPassword-authModal").fill("12345");

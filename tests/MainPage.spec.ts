@@ -4,9 +4,11 @@
 //     + Покрыть тестами сабмит формы
 //     - Сделать скриншот тест нескольких состояний
 
-import { test, expect, Page } from "@playwright/test";
-import ToolTip from "./helpers/tooltip";
+import { test, expect } from "@playwright/test";
+import Tooltip from "./helpers/tooltip";
 import { TEST_URL } from "./setTestUrl";
+
+const tooltip = new Tooltip();
 
 test.describe("Test MainPage Form", () => {
   test.beforeEach(async ({ page }) => {
@@ -25,8 +27,7 @@ test.describe("Test MainPage Form", () => {
 
   test("validation bad email input", async ({ page }) => {
     const input = await page.getByTestId("inputMail-authModal");
-    await input.click();
-    await input.blur();
+    await tooltip.clickAndBlur("inputMail-authModal", page);
     await expect(page.getByText("Обязательно к заполнению")).toBeVisible();
     await input.fill("wrong.mail");
     await expect(page.getByText("Некорректный email адрес")).toBeVisible();
@@ -36,8 +37,7 @@ test.describe("Test MainPage Form", () => {
 
   test("validation bad password input", async ({ page }) => {
     const input = await page.getByTestId("inputPassword-authModal");
-    await input.click();
-    await input.blur();
+    await tooltip.clickAndBlur("inputPassword-authModal", page);
     await expect(page.getByText("Обязательно к заполнению")).toBeVisible();
     await input.fill("123");
     await expect(page.getByText("Слишком короткий пароль")).toBeVisible();

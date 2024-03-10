@@ -1,3 +1,4 @@
+//ts-ignore
 import { test, expect, Page } from "@playwright/test";
 import { TEST_URL } from "./setTestUrl";
 

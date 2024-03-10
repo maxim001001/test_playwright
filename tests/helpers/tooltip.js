@@ -1,7 +1,8 @@
 //ts-ignore
 export default class ToolTip {
-  async focusAndBlur(locator) {
-    await this.focus(locator);
-    await this.blur(locator);
+  async clickAndBlur(elementid, page) {
+    const element = await page.getByTestId(elementid);
+    await element.click();
+    await element.blur();
   }
 }
