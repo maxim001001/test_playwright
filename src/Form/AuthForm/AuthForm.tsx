@@ -1,17 +1,14 @@
-import classnames from "classnames";
-import { Formik, Form, Field, FieldProps } from "formik";
+// AuthForm.tsx
+import React from "react";
+import { Formik, Form } from "formik";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toggleModalState } from "../../redux/slices/ModalState";
+import { toggleUserLogin } from "../../redux/slices/UserState";
+import { mockRequest, type IAuthRequest } from "../../mockRequest";
+import { validateEmail, validatePassword } from "../utils/validate";
 import { Button } from "../../components/Button/Button";
 import { Input } from "../../components/Input/Input";
-import { validateEmail, validatePassword } from "../utils/validate";
-import { type IAuthRequest, mockRequest } from "../../mockRequest";
-//@ts-ignore
-import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "../../redux/store";
-// @ts-ignore
-import { useDispatch } from "react-redux";
-import { toggleModal } from "../../redux/slices/ModalState";
-import { toggleUserLogin } from "../../redux/slices/UserState";
-
 import styles from "./AuthForm.module.scss";
 
 interface FormValues {
@@ -24,7 +21,7 @@ interface FormField {
   type: string;
   placeholder: string;
   label: string;
-  validate: (value: any) => string | undefined; // функция валидации
+  validate: (value: any) => string | undefined;
 }
 
 const formFields: FormField[] = [
@@ -45,14 +42,14 @@ const formFields: FormField[] = [
 ];
 
 export const AuthForm = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (data: IAuthRequest) => {
     const request = mockRequest(data);
     if (request) {
       dispatch(toggleUserLogin());
-      dispatch(toggleModal());
+      dispatch(toggleModalState());
       navigate("/dashboard");
     }
   };
@@ -63,28 +60,19 @@ export const AuthForm = () => {
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => handleSubmit(values)}
       >
-        {({ errors, touched, isSubmitting, isValid }) => (
+        {({ isSubmitting, isValid }) => (
           <Form>
             {formFields.map(({ name, type, placeholder, label, validate }) => (
-              <label
-                key={name}
-                className={classnames(styles.inputTitle, {
-                  [styles.error]: errors[name] && touched[name],
-                })}
-              >
-                {errors[name] && touched[name] ? errors[name] : label}
-                <Field name={name} validate={validate}>
-                  {({ field }: FieldProps<string>) => (
-                    <Input
-                      className={styles.Field}
-                      {...field}
-                      type={type}
-                      placeholder={placeholder}
-                      name={name}
-                      validate={validate}
-                    />
-                  )}
-                </Field>
+              <label key={name} className={styles.inputTitle}>
+                {label}
+                <Input
+                  className={styles.Field}
+                  name={name}
+                  type={type}
+                  placeholder={placeholder}
+                  validate={validate}
+                  formik
+                />
               </label>
             ))}
             <Button

@@ -3,7 +3,7 @@
 
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Button } from "./Button";
+import { Button } from "../Button";
 
 describe("Button test cases", () => {
   test("renders button with text", () => {

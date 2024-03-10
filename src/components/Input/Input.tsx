@@ -1,32 +1,35 @@
-// @ts-ignore
-import { type ValidationResult } from "./utils/validate";
-import { FC } from "react";
-import { Field } from "formik";
+// Input.tsx
+import React, { FC } from "react";
+import { Field, FieldProps } from "formik";
 
-interface IField {
+interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className: string;
   name: string;
-  type: string;
-  placeholder: string;
-  validate: ValidationResult;
+  validate?: (value: string) => string | undefined;
+  formik?: boolean; // Флаг, указывающий, используется ли компонент с Formik
 }
 
-export const Input: FC<IField> = ({
+export const Input: FC<IInputProps> = ({
   className,
   name,
-  type,
-  placeholder,
   validate,
+  formik,
+  ...props
 }) => {
-  return (
-    <>
-      <Field
-        className={className}
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        validate={validate}
-      />
-    </>
-  );
+  if (formik) {
+    return (
+      <Field name={name} validate={validate}>
+        {({ field, meta }: FieldProps<string>) => (
+          <>
+            {meta.touched && meta.error && (
+              <div className="error">{meta.error}</div>
+            )}
+            <input className={className} {...field} {...props} />
+          </>
+        )}
+      </Field>
+    );
+  }
+
+  return <input className={className} name={name} {...props} />;
 };

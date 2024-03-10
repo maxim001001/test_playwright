@@ -1,29 +1,26 @@
+// @ts-ignore
+import { useCallback } from "react";
 import { Button } from "../../components/Button/Button";
-import { TestButtonOnPage } from "../../components/Button/helpers/TestButtonOnPage";
+import { TestButtonOnPage } from "../../components/Button/tests/helpers/TestButtonOnPage";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../redux/store";
-// @ts-ignore
 import { useDispatch } from "react-redux";
-import { toggleModal } from "../../redux/slices/ModalState";
 import { toggleUserLogin } from "../../redux/slices/UserState";
 
 export default function DashBoard() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const handleLogOut = () => {
+  const handleLogout = useCallback(async () => {
     dispatch(toggleUserLogin());
     navigate("/");
-    setTimeout(() => {
-      dispatch(toggleModal());
-    }, 1000);
-  };
+  }, [dispatch, toggleUserLogin, navigate]);
 
   return (
     <>
       <div>
         <h1>У вас есть доступ на сайт</h1>
-        <Button name="default" text="Выйти" onClick={() => handleLogOut()} />
+        <Button name="default" text="Выйти" onClick={() => handleLogout()} />
       </div>
       <div>
         <h2>Варианты кнопок покрытые тестами</h2>
