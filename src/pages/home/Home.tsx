@@ -26,6 +26,7 @@ export default function Home() {
         onClick={toggleAuthModal}
         type={"button"}
         id="authBtn"
+        dataTestId="buttonOpen-authModal"
       />
       <div>
         <h2>для авторизации</h2>
