@@ -17,7 +17,12 @@ export default function Home() {
 
   return (
     <>
-      <Modal isOpen={isOpen} toggleOpen={toggleAuthModal} title="Авторизация">
+      <Modal
+        id="modal-auth"
+        isOpen={isOpen}
+        toggleOpen={toggleAuthModal}
+        title="Авторизация"
+      >
         <AuthForm />
       </Modal>
       <Button

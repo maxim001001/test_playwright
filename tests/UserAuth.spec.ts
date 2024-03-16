@@ -29,6 +29,9 @@ test.describe("Test Registration Form", () => {
     await page.getByTestId("inputMail-authModal").fill("admin@gmail.com");
     await page.getByTestId("inputPassword-authModal").fill("12345");
     page.getByTestId("buttonSubmit-authModal").click();
+    await page.waitForSelector("text=У вас есть доступ на сайт", {
+      timeout: 10000,
+    });
     await expect(page.getByText("У вас есть доступ на сайт")).toBeVisible();
     await expect(page).toHaveURL(`${TEST_URL}` + "dashboard");
     await page.getByText("Выйти").click();

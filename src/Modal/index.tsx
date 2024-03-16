@@ -12,9 +12,16 @@ interface IModalProps {
   toggleOpen: VoidFunction;
   title: string;
   children: React.ReactNode;
+  id: string;
 }
 
-const Modal: FC<IModalProps> = ({ isOpen, toggleOpen, title, children }) => {
+const Modal: FC<IModalProps> = ({
+  isOpen,
+  toggleOpen,
+  title,
+  children,
+  id,
+}) => {
   const formRef = useRef<HTMLDivElement>(null);
 
   const handleClickClose = useCallback(() => {
@@ -25,12 +32,12 @@ const Modal: FC<IModalProps> = ({ isOpen, toggleOpen, title, children }) => {
   useClickOutside(formRef, handleClickClose);
 
   return isOpen ? (
-    <CreateModal id="modal">
+    <CreateModal id={id}>
       <div
         className={classnames(style.formContainer, {
           [style.CloseBackground]: isOpen,
         })}
-        id="modal-background"
+        data-testid="modal-background"
       >
         <div
           ref={formRef}
