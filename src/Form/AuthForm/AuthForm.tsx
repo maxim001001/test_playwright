@@ -48,8 +48,8 @@ export const AuthForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (data: IAuthRequest) => {
-    const request = mockRequest(data);
+  const handleSubmit = async (data: IAuthRequest) => {
+    const request = await mockRequest(data);
     if (request) {
       dispatch(toggleUserLogin());
       dispatch(toggleModalState());

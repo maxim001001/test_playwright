@@ -1,1 +1,1 @@
-export const TEST_URL = "https://xtsgjt-3000.csb.app/";
+export const TEST_URL = "https://ld34z6-3000.csb.app/";
